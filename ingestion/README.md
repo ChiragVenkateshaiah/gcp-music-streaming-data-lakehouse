@@ -1,28 +1,34 @@
-# Authenticate with GCP
+# Ingestion Layer
+
+### Authenticate with GCP
+```gcloud
 gcloud auth login
+```
 
-
-# Set active project
+### Set active project
+```gcloud
 gcloud config set project <PROJECT_ID>
+```
 
-
-# Create GCS bucket (globally unique name)
+### Create GCS bucket (globally unique name)
+```gcloud
 gsutil mb -l asia-south1 gs://<your-name>-music-streaming-datalake
+```
 
-
-# Upload raw music events to Bronze layer
+### Upload raw music events to Bronze layer
+```gcloud
 gsutil cp data/music_events.json \
 gs://<your-name>-music-streaming-datalake/music_events/ingestion_date=2026-01-01/
+```
 
-
-# Why These Commands:
+### Why These Commands:
 `gcloud auth login` - Secure authentication
 `gsutil mb` - Creates durable object storage
 `gsutil cp` - Append-only ingestion
 `ingestion_date` - Enables replay & auditability
 
 
-# Run the Script
+## Run the Script
 ```bash
 chmod +x ingestion/ingestion_bronze.sh
 ./ingestion/ingest_bronze.sh
