@@ -230,6 +230,7 @@ This project demonstrates:
 
 ## Author
 Chirag Venkateshaiah
-Backend Python Developer | Aspiring Data Engineer
-
+```text
+> Backend Python Developer | Aspiring Data Engineer
+```
 ---
