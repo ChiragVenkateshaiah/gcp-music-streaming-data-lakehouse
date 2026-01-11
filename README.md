@@ -14,79 +14,24 @@ The focus of this project is **real-world data engineering practices**, includin
 - Cost-aware BigQuery design
 - Debugging production issues
 
-<<<<<<< HEAD
 ## Folder Structure
 ```graphql
 gcp-music-streaming-data-lakehouse
-=======
-
-## High-Level Architecture
-```text
-Cloud Storage (Raw JSON files)
-        ↓
-Bronze Layer (BigQuery)
-  - Raw, permissive schema
-  - Mirrors source data
-        ↓
-Silver Layer (BigQuery)
-  - Cleaned & typed data
-  - Deduplicated events
-  - Partitioned & clustered
-        ↓
-Gold Layer (BigQuery)
-  - Aggregated KPIs
-  - Dashboard-ready tables
-```
-
-## Tech Stack
-| Category        | Tools                 |
-| --------------- | --------------------- |
-| Cloud Platform  | Google Cloud Platform |
-| Storage         | Cloud Storage         |
-| Data Warehouse  | BigQuery              |
-| Orchestration   | Bash scripts          |
-| Query Language  | Standard SQL          |
-| Version Control | GitHub                |
-| Execution       | Cloud Shell           |
-
-
-## Project Structure
-```text
-.
->>>>>>> 7a718ce (docs: add comprehensive README for end-to-end GCP data engineering pipeline)
 ├── orchestration/
 │   ├── deploy_gcs_to_bronze.sh
 │   ├── deploy_bronze_to_silver.sh
 │   └── deploy_silver_to_gold.sh
-<<<<<<< HEAD
-=======
-│
->>>>>>> 7a718ce (docs: add comprehensive README for end-to-end GCP data engineering pipeline)
 ├── sql/
 │   └── schemas/
 │       ├── bronze_music_events_schema.json
 │       ├── silver_music_events_schema.json
 │       └── gold_daily_track_metrics_schema.json
-<<<<<<< HEAD
 ├── transformations/
 │   ├── silver/
 │   └── gold/
 ├── docs/
 │   └── debugging/
 │       └── bigquery_bronze_silver_debugging.md
-=======
-│
-├── transformations/
-│   ├── silver/
-│   │   └── silver_music_events.sql
-│   └── gold/
-│       └── gold_daily_track_metrics.sql
-│
-├── docs/
-│   └── debugging/
-│       └── bigquery_bronze_silver_debugging.md
-│
->>>>>>> 7a718ce (docs: add comprehensive README for end-to-end GCP data engineering pipeline)
 └── README.md
 
 ```
@@ -206,6 +151,13 @@ All major debugging scenarios are documented in:
 ```bash
 docs/debugging/bigquery_bronze_silver_debugging.md
 ```
+
+---
+## Infrastructure & Environment
+
+This project runs on a dedicated Compute Engine VM with a production-style SSH setup.
+
+📄 See detailed documentation: [docs/infra.md](docs/infra.md)
 
 ---
 
