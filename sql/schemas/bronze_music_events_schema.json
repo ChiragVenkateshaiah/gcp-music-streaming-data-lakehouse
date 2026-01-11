@@ -1,0 +1,11 @@
+[
+    {"name": "event_id", "type": "STRING", "mode": "NULLABLE"},
+    { "name": "user_id", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "event_type", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "track_id", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "artist", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "event_time", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "duration_sec", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "device", "type": "STRING", "mode": "NULLABLE" },
+    { "name": "location", "type": "STRING", "mode": "NULLABLE" }
+]

@@ -8,7 +8,7 @@ DATASET="music_analytics"
 BRONZE_TABLE="bronze_music_events"
 SILVER_TABLE="silver_music_events"
 
-SCHEMA_PATH="sql/schemas/silverv_music_events_schema.json"
+SCHEMA_PATH="sql/schemas/silver_music_events_schema.json"
 SILVER_SQL_PATH="transformations/silver/silver_music_events.sql"
 
 echo "Using GCP Project: ${PROJECT_ID}"

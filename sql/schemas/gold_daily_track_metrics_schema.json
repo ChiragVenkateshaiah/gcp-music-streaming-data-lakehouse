@@ -1,0 +1,8 @@
+[
+  { "name": "event_date", "type": "DATE", "mode": "REQUIRED" },
+  { "name": "track_id", "type": "STRING", "mode": "REQUIRED" },
+  { "name": "artist", "type": "STRING", "mode": "NULLABLE" },
+  { "name": "total_plays", "type": "INTEGER", "mode": "REQUIRED" },
+  { "name": "unique_users", "type": "INTEGER", "mode": "REQUIRED" },
+  { "name": "total_listening_sec", "type": "INTEGER", "mode": "REQUIRED" }
+]
