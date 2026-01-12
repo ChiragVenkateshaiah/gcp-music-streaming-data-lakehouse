@@ -32,6 +32,12 @@ gcp-music-streaming-data-lakehouse
 ├── docs/
 │   └── debugging/
 │       └── bigquery_bronze_silver_debugging.md
+│   └── bronze/
+│       └── bronze.md
+│   └── silver/
+│       └── silver.md
+│   └── gold/
+│       └── gold.md   
 └── README.md
 
 ```
@@ -40,9 +46,12 @@ gcp-music-streaming-data-lakehouse
 
 ## Bronze Layer - Raw Ingestion
 ### Purpose
-- Store raw data in a queryable form
-- Preserve source fidelity
-- Allow reprocessing and replay
+The Bronze layer stores raw, immutable streaming events exactly as received from the source system
+
+It acts as:
+- A system of record
+- A debugging and audit layer
+- A replayable source for downstream processing
 
 ### Source
 - Raw JSON files stored in Cloud Storage
@@ -55,18 +64,31 @@ gs://chirag-music-streaming-datalake/bronze/music_events
 - Schema is a superset of raw JSON
 - No deduplication or transformations
 
+### Example Fields
+- `event_id`
+- `user_id`
+- `event_type`
+- `track_id`
+- `artist`
+- `event_time` (STRING)
+- `duration_sec` (STRING)
+- `device`
+- `location`
+
 ### Automation
 ```bash
 ./orchestration/deploy_gcs_to_bronze.sh
 ```
 
+### Detailed documentation & exploratory queries:
+[docs/bronze/bronze.md](docs/bronze/bronze.md)
+
 ---
 
 ## Silver Layer - Clean & Trusted Data
 ### Purpose
-- Enforce data contracts
-- Clean and standardize raw events
-- Optimize for analytics queries
+The Silver layer transform raw Bronze data into clean, structured, and queryable events.
+This layer ensures data correctness before aggregation
 
 ### Key Transformations
 - Type casting (`STRING -> TIMESTAMP / INT`)
@@ -74,6 +96,12 @@ gs://chirag-music-streaming-datalake/bronze/music_events
 - Time normalization
 - Null filtering on required fields
 - Audit column (`ingestion_time`)
+
+### Example Fields
+- `event_time` (TIMESTAMP)
+- `event_date` (DATE, partitioned)
+- `duration_sec` (INTEGER)
+- `ingestion_time` (TIMESTAMP)
 
 ### Optimizations
 - Partitioned by `event_date`
@@ -83,6 +111,11 @@ gs://chirag-music-streaming-datalake/bronze/music_events
 ```bash
 ./orchestration/deploy_bronze_to_silver.sh
 ```
+### Why Silver Matters
+Mistakes at this stage directly impact business metrics, so strict validation is applied.
+
+### Detailed documentation & Validation queries:
+[docs/silver/silver.md](docs/silver/silver.md)
 
 ---
 
@@ -91,6 +124,14 @@ gs://chirag-music-streaming-datalake/bronze/music_events
 - Provide **business-ready KPIs**
 - Power dashboards and analytics
 - Reduce query cost and complexity
+
+### Granularity
+- One row per track per day
+
+### Key Metrics Produced
+- `total_plays`
+- `unique_users`
+- `total_listening_sec`
 
 ### Gold Table: `gold_daily_track_metrics`
 
@@ -109,6 +150,28 @@ Metric Produced
 ```bash
 ./orchestration/deploy_silver_to_gold.sh
 ```
+
+### Example Business Questions Answered
+- How active is the platform daily?
+- Which tracks and artists drive engagement?
+- Are users listening more or skipping?
+- Is engagement growing day-over-day?
+
+### Detailed metrics, SQL queries & insights:
+[docs/gold_layer.md](docs/gold/gold_layer.md)
+
+---
+## Data Flow Summary (Bronze -> Silver -> Gold)
+| Layer  | Responsibility            |
+| ------ | ------------------------- |
+| Bronze | Capture raw truth         |
+| Silver | Enforce structure & trust |
+| Gold   | Enable decisions          |
+
+This separation ensures:
+- Traceability
+- Scalability
+- Reusability of business metrics
 
 ---
 
@@ -179,6 +242,11 @@ This project demonstrates:
 - Real Data Engineering patterns
 
 ---
+
+## Final Note
+This repository represents a complete, end-to-end data engineering workflow, from raw ingestion to business KPIs.
+Each Layer is intentionally designed, documented, and validated to reflect **real production-grade systems**
+
 
 ## Author
 Chirag Venkateshaiah
